@@ -9,20 +9,26 @@ function Edit() {
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    const prevData = JSON?.parse(localStorage?.getItem("data"));
-    const temp = prevData.filter((each) => each.Id != id);
-    const newData = [
-      ...temp,
-      {
-        Id: id,
-        name: newName,
-        desc: newDescription,
-      },
-    ];
+    if (newName.trim() === "" || newDescription.trim() === "") {
+      <div class="alert alert-danger" role="alert">
+        This is a danger alert—check it out!
+      </div>;
+    } else {
+      const prevData = JSON?.parse(localStorage?.getItem("data"));
+      const temp = prevData.filter((each) => each.Id != id);
+      const newData = [
+        ...temp,
+        {
+          Id: id,
+          name: newName,
+          desc: newDescription,
+        },
+      ];
 
-    localStorage?.setItem("data", JSON?.stringify(newData));
+      localStorage?.setItem("data", JSON?.stringify(newData));
 
-    navigate("/list");
+      navigate("/list");
+    }
   };
 
   useEffect(() => {
@@ -31,6 +37,7 @@ function Edit() {
     setName(temp.name);
     setDescription(temp.desc);
   }, []);
+
   return (
     <>
       <div className="p-3 mb-2 bg-info text-white">
